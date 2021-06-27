@@ -38,9 +38,9 @@ var cfgFile string
 
 var rootCmd = &cobra.Command{
 	Use:   "cpanel",
-	Short: "Command line interface to North Shore Hikers",
+	Short: "Command line interface to a cpanel account",
 	Long: `
-cpanel is a CLI tool for North Shore Hikers account.
+cpanel is a CLI tool for a cpanel account.
 `,
 }
 
@@ -52,6 +52,8 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./app.env)")
+
+	rootCmd.PersistentFlags().StringP("domain", "d", viper.GetString("CPANEL_API_DOMAIN"), "Domain address")
 
 	rootCmd.Version = "0.0.1"
 }

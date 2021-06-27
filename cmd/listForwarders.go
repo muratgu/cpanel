@@ -27,21 +27,15 @@ import (
 	"net/url"
 	"encoding/json"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var listForwardersCmd = &cobra.Command{
 	Use:   "list-forwarders",
 	Short: "List email forwarders",
 	Run: func(cmd *cobra.Command, args []string) {
-		domain := viper.GetString("CPANEL_API_DOMAIN")
-		if domain == "" {
-			log.Fatal("CPANEL_API_DOMAIN undefined")
-		}
+		domain, _ := cmd.Flags().GetString("domain")
 		data := url.Values{}
     	data.Set("domain", domain)
-		data.Set("api.sort", "1")
-		data.Set("api.sort_column", "forward")
 		if resp, err := Get("Email/list_forwarders", data); err != nil {
 			log.Fatal(err)
 		} else {		
