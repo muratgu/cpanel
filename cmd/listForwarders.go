@@ -24,6 +24,7 @@ package cmd
 import (
 	"os"
 	"log"
+	"fmt"
 	"net/url"
 	"encoding/json"
 	"github.com/spf13/cobra"
@@ -34,20 +35,38 @@ var listForwardersCmd = &cobra.Command{
 	Short: "List email forwarders",
 	Run: func(cmd *cobra.Command, args []string) {
 		domain, _ := cmd.Flags().GetString("domain")
+		dot, _ := cmd.Flags().GetBool("dot")
 		data := url.Values{}
     	data.Set("domain", domain)
 		if resp, err := Get("Email/list_forwarders", data); err != nil {
 			log.Fatal(err)
-		} else {		
-			enc := json.NewEncoder(os.Stdout)
-			enc.SetIndent("", "    ")
-			if err = enc.Encode(resp); err != nil {
-				log.Fatal(err)
+		} else {	
+			if dot {
+				fmt.Println("digraph G {")
+				fmt.Println("   rankdir=LR;")
+				fmt.Println("   node [shape=\"box\"];")				
+				for k, v := range resp {
+					if k == "data" {
+						pairs := v.([]interface{}) 
+						for _, pair := range pairs {
+							p := pair.(map[string]interface{}) 
+							fmt.Printf("   \"%s\" -> \"%s\"\n", p["dest"], p["forward"])
+						}						
+					}
+				}
+				fmt.Println("}")
+			} else {
+				enc := json.NewEncoder(os.Stdout)
+				enc.SetIndent("", "    ")
+				if err = enc.Encode(resp); err != nil {
+					log.Fatal(err)
+				}
 			}
 		}
 	},
 }
 
 func init() {
+	listForwardersCmd.Flags().BoolP("dot", "", false, "dot format output")
 	rootCmd.AddCommand(listForwardersCmd)
 }
