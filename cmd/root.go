@@ -22,6 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"io"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -122,5 +123,13 @@ func Println(data *string, err error) {
 		fmt.Println(err)
 	} else {
 		fmt.Println(*data)
+	}
+}
+
+func JsonEncode(data map[string]interface{}, writer io.Writer) {
+	enc := json.NewEncoder(writer)
+	enc.SetIndent("", "    ")
+	if err := enc.Encode(data); err != nil {
+		log.Fatal(err)
 	}
 }

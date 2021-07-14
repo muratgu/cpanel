@@ -25,7 +25,6 @@ import (
 	"log"
 	"os"
 	"net/url"
-	"encoding/json"
 	"github.com/spf13/cobra"
 )
 
@@ -40,11 +39,7 @@ var traceDeliveryCmd = &cobra.Command{
 		if resp, err := Get("Email/trace_delivery", data); err != nil {
 			log.Fatal(err)
 		} else {
-			enc := json.NewEncoder(os.Stdout)
-			enc.SetIndent("", "    ")
-			if err = enc.Encode(resp); err != nil {
-				log.Fatal(err)
-			}
+			JsonEncode(resp, os.Stdout)
 		}
 	},
 }
