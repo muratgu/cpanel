@@ -22,10 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"log"
-	"os"
-	"net/url"
 	"github.com/spf13/cobra"
+	"log"
+	"net/url"
+	"os"
 )
 
 var traceDeliveryCmd = &cobra.Command{

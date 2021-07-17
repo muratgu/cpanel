@@ -22,10 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"log"
-	"os"
-	"net/url"
 	"github.com/spf13/cobra"
+	"log"
+	"net/url"
+	"os"
 )
 
 var delForwarderCmd = &cobra.Command{
@@ -37,7 +37,7 @@ var delForwarderCmd = &cobra.Command{
 		email := args[0]
 		fwdemail := args[1]
 		data := url.Values{}
-    	data.Set("domain", domain)
+		data.Set("domain", domain)
 		data.Set("address", email)
 		data.Set("forwarder", fwdemail)
 		if resp, err := Get("Email/delete_forwarder", data); err != nil {

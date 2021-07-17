@@ -22,10 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"log"
-	"os"
-	"net/url"
 	"github.com/spf13/cobra"
+	"log"
+	"net/url"
+	"os"
 )
 
 var addForwarderCmd = &cobra.Command{
@@ -37,7 +37,7 @@ var addForwarderCmd = &cobra.Command{
 		email := args[0]
 		fwdemail := args[1]
 		data := url.Values{}
-    	data.Set("domain", domain)
+		data.Set("domain", domain)
 		data.Set("email", email)
 		data.Set("fwdemail", fwdemail)
 		data.Set("fwdopt", "fwd")

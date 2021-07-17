@@ -22,10 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"os"
+	"github.com/spf13/cobra"
 	"log"
 	"net/url"
-	"github.com/spf13/cobra"
+	"os"
 )
 
 var listFeaturesCmd = &cobra.Command{
@@ -35,7 +35,7 @@ var listFeaturesCmd = &cobra.Command{
 		data := url.Values{}
 		if resp, err := Get("Features/list_features", data); err != nil {
 			log.Fatal(err)
-		} else {		
+		} else {
 			JsonEncode(resp, os.Stdout)
 		}
 	},

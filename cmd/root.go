@@ -22,17 +22,17 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"io"
-	"fmt"
-	"io/ioutil"
-	"log"
-	"errors"
-	"strings"
-	"net/http"	
-	"net/url"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 var cfgFile string
@@ -102,12 +102,12 @@ func Get(method string, values url.Values) (map[string]interface{}, error) {
 		return nil, err
 	}
 	if res.StatusCode >= 200 && res.StatusCode <= 299 {
-        var data map[string]interface{}
+		var data map[string]interface{}
 		json.Unmarshal(body, &data)
 		return data, nil
 	} else {
 		return nil, errors.New(fmt.Sprintf("HTTP Error %d", res.StatusCode))
-	}	
+	}
 }
 
 func IfSetElse(value bool, whenSet string, whenNotSet string) string {

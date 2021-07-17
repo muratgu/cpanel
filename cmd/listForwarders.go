@@ -22,11 +22,11 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"os"
-	"log"
 	"fmt"
-	"net/url"
 	"github.com/spf13/cobra"
+	"log"
+	"net/url"
+	"os"
 )
 
 var listForwardersCmd = &cobra.Command{
@@ -36,21 +36,21 @@ var listForwardersCmd = &cobra.Command{
 		domain, _ := cmd.Flags().GetString("domain")
 		dot, _ := cmd.Flags().GetBool("dot")
 		data := url.Values{}
-    	data.Set("domain", domain)
+		data.Set("domain", domain)
 		if resp, err := Get("Email/list_forwarders", data); err != nil {
 			log.Fatal(err)
-		} else {	
+		} else {
 			if dot {
 				fmt.Println("digraph G {")
 				fmt.Println("   rankdir=LR;")
-				fmt.Println("   node [shape=\"box\"];")				
+				fmt.Println("   node [shape=\"box\"];")
 				for k, v := range resp {
 					if k == "data" {
-						pairs := v.([]interface{}) 
+						pairs := v.([]interface{})
 						for _, pair := range pairs {
-							p := pair.(map[string]interface{}) 
+							p := pair.(map[string]interface{})
 							fmt.Printf("   \"%s\" -> \"%s\"\n", p["dest"], p["forward"])
-						}						
+						}
 					}
 				}
 				fmt.Println("}")
